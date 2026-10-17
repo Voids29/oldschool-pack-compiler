@@ -111,4 +111,4 @@ build/<version>/    (generated) layers, staged trees, logs, out/
  
 Released into the public domain under [The Unlicense](LICENSE), the same license used by Fedora31's [no-hats-bgum](https://github.com/Fedora31/no-hats-bgum) tooling that these scripts are based on.
  
-Note that this applies to the scripts in this repository only. The pack itself ([oldschool-pack-fix-2025](https://github.com/Voids29/oldschool-pack-fix)) has its own license.
+Note that this applies to the scripts in this repository only. The pack itself ([oldschool-pack-fix](https://github.com/Voids29/oldschool-pack-fix)) has its own license.
