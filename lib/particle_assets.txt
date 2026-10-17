@@ -1,0 +1,3 @@
+# Extra materials the particle VPK needs, one per line, relative to materials/
+# (files or folders; looked up in materials/ then textures/vtf/ of the pack repo)
+# effects/example_particle
