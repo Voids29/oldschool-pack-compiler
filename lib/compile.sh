@@ -6,13 +6,14 @@ set -eu
 src=$1 out=$2
 : "${WINTF2DIR:?}" "${LOGDIR:?}"
 M=$WINTF2DIR/tf/models BAK=$WINTF2DIR/tf/models.oldschool_bak
-[ -f "$WINTF2DIR/bin/studiomdl.exe" ] || { echo "err: no studiomdl.exe in $WINTF2DIR/bin" >&2; exit 1; }
+[ -f "${STUDIOMDL:?}" ] || { echo "err: studiomdl++ not found at $STUDIOMDL" >&2; exit 1; }
+[ -f "$WINTF2DIR/tf/gameinfo.txt" ] || { echo "err: no tf/gameinfo.txt in $WINTF2DIR" >&2; exit 1; }
 [ -d "$src" ] || { echo "err: qc dir '$src' not found" >&2; exit 1; }
 [ ! -e "$BAK" ] || { echo "err: $BAK exists (crashed run?); restore it manually" >&2; exit 1; }
 restore() { rm -rf "$M"; if [ -e "$BAK" ]; then mv "$BAK" "$M"; fi; return 0; }
 if [ -e "$M" ]; then mv "$M" "$BAK"; fi
 trap restore EXIT
-TAG=$(basename "$out"); export TAG LOGDIR WINTF2DIR
+TAG=$(basename "$out"); export TAG LOGDIR WINTF2DIR STUDIOMDL
 : >"$LOGDIR/$TAG.failed"
 echo "compiling $(find "$src" -name '*.qc' | wc -l) models -> $TAG"
 find "$src" -name '*.qc' -print0 | xargs -0 -n1 -P"${JOBS:-8}" "$ROOT/lib/studiomdl.sh"
