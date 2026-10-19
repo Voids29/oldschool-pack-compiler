@@ -26,8 +26,9 @@ Compiled models are never committed to a repo. They only exist in `build/` and i
 ## Requirements
 
 - Linux (or WSL)
-- A TF2 install containing `bin/studiomdl.exe`
-- `wine`
+- A TF2 install (used as the `-game` directory; needs `tf/gameinfo.txt`)
+- [studiomdl++](https://ficool2.github.io/HammerPlusPlus-Website/tools.html) (the Linux build is a native binary; download `tools++_linux.tar.gz` and extract it anywhere)
+- `wine`, only if you point `STUDIOMDL` at a Windows `.exe`
 - `git` and `git-lfs`
 - `zip`, `unzip`, `curl`
 - [VPKEdit](https://github.com/craftablescience/VPKEdit) CLI (`vpkeditcli`) on your `PATH`
@@ -49,6 +50,7 @@ cp config.example.sh config.sh     # then edit it
 | Variable | Meaning |
 |---|---|
 | `WINTF2DIR` | Path to your TF2 install (the folder containing `bin/` and `tf/`) |
+| `STUDIOMDL` | Path to the `studiomdl++` binary. A path ending in `.exe` is run through `wine`; anything else runs natively |
 | `PACK_SLUG` | GitHub repo holding the pack and its releases |
 | `VPKCLI` | VPKEdit CLI command name |
 | `JOBS` | Number of parallel studiomdl jobs |
