@@ -30,16 +30,16 @@ esac; done
 [ -n "$VER" ] || { usage >&2; exit 1; }
 [ -f "$ROOT/config.sh" ] || { echo "copy config.example.sh to config.sh and edit it" >&2; exit 1; }
 . "$ROOT/config.sh"
-: "${WINTF2DIR:?}" "${PACK_SLUG:?}" "${STUDIOMDL:?set STUDIOMDL in config.sh (path to studiomdl++)}"
-[ -f "$STUDIOMDL" ] || { echo "err: STUDIOMDL ($STUDIOMDL) not found" >&2; exit 1; }
-STUDIOMDL=$(realpath "$STUDIOMDL")
+: "${PACK_SLUG:?}"
+STUDIOMDL=${STUDIOMDL:-$ROOT/tools/tools++_linux/studiomdl++}
+[ -x "$STUDIOMDL" ] || { echo "err: studiomdl++ not found at $STUDIOMDL (run ./setup.sh or set STUDIOMDL)" >&2; exit 1; }
+STUDIOMDL=$(realpath "$STUDIOMDL") EXTRA_MATERIALS=${EXTRA_MATERIALS:-}
 VPKCLI=${VPKCLI:-vpkeditcli} JOBS=${JOBS:-8} ITEMS_GAME=${ITEMS_GAME:-}
-PACK=$ROOT/src/pack NHA=$ROOT/src/nha BUILD=$ROOT/build/$VER LOGDIR=$ROOT/build/$VER/logs
+PACK=$ROOT/src/pack NHA=$ROOT/src/nha BUILD=$ROOT/build/$VER LOGDIR=$ROOT/build/$VER/logs GAMEDIR=$ROOT/build/$VER/game
 [ -d "$PACK" ] && [ -d "$NHA" ] || { echo "run ./setup.sh first" >&2; exit 1; }
 for t in xargs zip unzip git "$VPKCLI"; do
 	command -v "$t" >/dev/null || { echo "missing tool: $t" >&2; exit 1; }
 done
-[ "${STUDIOMDL%.exe}" = "$STUDIOMDL" ] || command -v wine >/dev/null || { echo "missing tool: wine (needed for a .exe STUDIOMDL)" >&2; exit 1; }
 [ "$PUBLISH" = 0 ] || command -v gh >/dev/null || { echo "missing tool: gh" >&2; exit 1; }
 
 # particle VPK: rebuild only if forced, never released, or particles/ changed since last tag
@@ -48,10 +48,11 @@ if [ "$FORCE" = 0 ]; then
 	LAST=$(git -C "$PACK" describe --tags --abbrev=0 2>/dev/null || true)
 	[ -z "$LAST" ] || ! git -C "$PACK" diff --quiet "$LAST" -- particles || PART=reuse
 fi
-export ROOT VER WINTF2DIR STUDIOMDL PACK_SLUG VPKCLI JOBS ITEMS_GAME PACK NHA BUILD LOGDIR PART LAST
+export ROOT VER STUDIOMDL GAMEDIR EXTRA_MATERIALS PACK_SLUG VPKCLI JOBS ITEMS_GAME PACK NHA BUILD LOGDIR PART LAST
 echo "== release $VER (particles: $PART${LAST:+, last tag $LAST})"
 
 rm -rf "$BUILD"; mkdir -p "$BUILD/layers" "$BUILD/out" "$LOGDIR"
+"$ROOT/lib/gamedir.sh"
 "$ROOT/lib/compile.sh" "$PACK/models/decompiled" "$BUILD/layers/base"
 "$ROOT/lib/nha.sh" "$BUILD/layers/nha"
 "$ROOT/lib/stage.sh" default base
