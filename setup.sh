@@ -9,7 +9,7 @@ else git clone "https://github.com/$PACK_SLUG.git" src/pack; fi
 git -C src/pack fetch --tags origin no-hats-addon
 if [ -d src/nha ]; then git -C src/nha checkout -q --detach origin/no-hats-addon
 else git -C src/pack worktree add --detach ../nha origin/no-hats-addon; fi
-if [ -z "${STUDIOMDL:-}" ] && [ ! -x tools/tools++_linux/studiomdl++ ]; then
+if [ -z "${STUDIOMDL:-}" ] && [ ! -x tools/tools++_linux/studiomdl++ ] && ! command -v studiomdl++ >/dev/null; then
 	mkdir -p tools
 	curl -fsSL https://github.com/ficool2/misc_tools/releases/download/v1/tools++_linux.tar.gz | tar xz -C tools
 fi

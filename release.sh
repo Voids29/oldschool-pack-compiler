@@ -31,8 +31,9 @@ esac; done
 [ -f "$ROOT/config.sh" ] || { echo "copy config.example.sh to config.sh and edit it" >&2; exit 1; }
 . "$ROOT/config.sh"
 : "${PACK_SLUG:?}"
-STUDIOMDL=${STUDIOMDL:-$ROOT/tools/tools++_linux/studiomdl++}
-[ -x "$STUDIOMDL" ] || { echo "err: studiomdl++ not found at $STUDIOMDL (run ./setup.sh or set STUDIOMDL)" >&2; exit 1; }
+# config.sh value (name or path) > studiomdl++ on PATH > copy downloaded by setup.sh
+STUDIOMDL=$(command -v "${STUDIOMDL:-studiomdl++}" || echo "${STUDIOMDL:-$ROOT/tools/tools++_linux/studiomdl++}")
+[ -x "$STUDIOMDL" ] || { echo "err: studiomdl++ not found at $STUDIOMDL (put studiomdl++ on your PATH, run ./setup.sh, or set STUDIOMDL)" >&2; exit 1; }
 STUDIOMDL=$(realpath "$STUDIOMDL") EXTRA_MATERIALS=${EXTRA_MATERIALS:-}
 VPKCLI=${VPKCLI:-vpkeditcli} JOBS=${JOBS:-8} ITEMS_GAME=${ITEMS_GAME:-}
 PACK=$ROOT/src/pack NHA=$ROOT/src/nha BUILD=$ROOT/build/$VER LOGDIR=$ROOT/build/$VER/logs GAMEDIR=$ROOT/build/$VER/game
