@@ -31,7 +31,7 @@ Compiled models are never committed to a repo. They only exist in `build/` and i
 - `zip`, `unzip`, `curl`
 - [VPKEdit](https://github.com/craftablescience/VPKEdit) CLI (`vpkeditcli`) on your `PATH`
 - [GitHub CLI](https://cli.github.com/) (`gh`), only needed for `--publish` and for reusing an old particle VPK
-- [NHSchema](https://git.pevhs.ch/nhschema.git), *this is a git file, so clone it with git!* Only needed if generating database. Otherwise ignore this requirement unless you get errors about a database. For documentation, look [here!](https://pevhs.ch/tf2/nhschema) Needs `gcc`, `make`, and `libc` installed in order to build.
+- [NHSchema](https://git.pevhs.ch/nhschema.git), *this is a git file, so clone it with git!* Only needed if generating database. Otherwise ignore this requirement unless you get errors about a database. For documentation, look [here!](https://pevhs.ch/tf2/nhschema) Needs `gcc` and `make` installed in order to build.
 
 
 ## Setup
