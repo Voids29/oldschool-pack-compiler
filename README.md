@@ -49,7 +49,7 @@ cp config.example.sh config.sh     # then edit it
 
 | Variable | Meaning |
 |---|---|
-| `STUDIOMDL` | Optional path to `studiomdl++` (default: the copy `setup.sh` downloads into `tools/`) |
+| `STUDIOMDL` | Optional name or path of `studiomdl++`. Default: whatever is on your `PATH`, otherwise the copy `setup.sh` downloads into `tools/` |
 | `EXTRA_MATERIALS` | Optional extra `materials/` tree for studiomdl++ to read (see notes) |
 | `PACK_SLUG` | GitHub repo holding the pack and its releases |
 | `VPKCLI` | VPKEdit CLI command name |
