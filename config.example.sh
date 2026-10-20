@@ -5,3 +5,4 @@ JOBS=8                                        # parallel studiomdl++ jobs
 ITEMS_GAME=""                                 # optional: path to items_game.txt (copied into nhm_factory)
 #STUDIOMDL=""                                 # optional: name or path of studiomdl++ (default: found on PATH, else tools/ from ./setup.sh)
 #EXTRA_MATERIALS=""                           # optional: extra materials/ tree (e.g. extracted TF2 materials) for studiomdl++
+#STUDIOMDL_FLAGS=""                           # optional: extra studiomdl++ flags, e.g. "-nodx80"

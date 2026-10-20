@@ -34,7 +34,7 @@ esac; done
 # config.sh value (name or path) > studiomdl++ on PATH > copy downloaded by setup.sh
 STUDIOMDL=$(command -v "${STUDIOMDL:-studiomdl++}" || echo "${STUDIOMDL:-$ROOT/tools/tools++_linux/studiomdl++}")
 [ -x "$STUDIOMDL" ] || { echo "err: studiomdl++ not found at $STUDIOMDL (put studiomdl++ on your PATH, run ./setup.sh, or set STUDIOMDL)" >&2; exit 1; }
-STUDIOMDL=$(realpath "$STUDIOMDL") EXTRA_MATERIALS=${EXTRA_MATERIALS:-}
+STUDIOMDL=$(realpath "$STUDIOMDL") EXTRA_MATERIALS=${EXTRA_MATERIALS:-} STUDIOMDL_FLAGS=${STUDIOMDL_FLAGS:-}
 VPKCLI=${VPKCLI:-vpkeditcli} JOBS=${JOBS:-8} ITEMS_GAME=${ITEMS_GAME:-}
 PACK=$ROOT/src/pack NHA=$ROOT/src/nha BUILD=$ROOT/build/$VER LOGDIR=$ROOT/build/$VER/logs GAMEDIR=$ROOT/build/$VER/game
 [ -d "$PACK" ] && [ -d "$NHA" ] || { echo "run ./setup.sh first" >&2; exit 1; }
@@ -49,7 +49,7 @@ if [ "$FORCE" = 0 ]; then
 	LAST=$(git -C "$PACK" describe --tags --abbrev=0 2>/dev/null || true)
 	[ -z "$LAST" ] || ! git -C "$PACK" diff --quiet "$LAST" -- particles || PART=reuse
 fi
-export ROOT VER STUDIOMDL GAMEDIR EXTRA_MATERIALS PACK_SLUG VPKCLI JOBS ITEMS_GAME PACK NHA BUILD LOGDIR PART LAST
+export ROOT VER STUDIOMDL STUDIOMDL_FLAGS GAMEDIR EXTRA_MATERIALS PACK_SLUG VPKCLI JOBS ITEMS_GAME PACK NHA BUILD LOGDIR PART LAST
 echo "== release $VER (particles: $PART${LAST:+, last tag $LAST})"
 
 rm -rf "$BUILD"; mkdir -p "$BUILD/layers" "$BUILD/out" "$LOGDIR"
